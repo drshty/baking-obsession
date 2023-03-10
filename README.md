@@ -2,7 +2,7 @@
 
 <p align="center">
    <a href="#">
-   <img src="/public/assests/logoImage.png" width="150px">
+   <img src="/public/assests/logoImage.png" width="500px">
    </a>
 </p>
 
