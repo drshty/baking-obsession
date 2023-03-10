@@ -15,9 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('phonenumber')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->text('address')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign('city_id')->references('id')->on('cities');
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->string('otp')->nullable();
+            $table->boolean('isverify')->default(false);
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
     }
