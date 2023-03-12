@@ -22,11 +22,12 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
 
     <!-- Google fonts Links -->
-    
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comforter&family=Condiment&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://coolors.co/palette/352208-e1bb80-7b6b43-685634-806443" />
+
+    <livewire:styles />
+    
 </head>

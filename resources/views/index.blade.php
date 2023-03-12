@@ -6,6 +6,7 @@
 <body>
     <x-navbar />
     
+    <livewire:scripts />
 </body>
 
 </html>
