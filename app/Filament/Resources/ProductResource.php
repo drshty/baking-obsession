@@ -2,24 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\CategoryResource\RelationManagers\CategoriesRelationManager;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
+use Filament\Tables\Filters\Filter\sort;
 use Filament\Tables;
-use Filament\Tables\Columns\Column;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class ProductResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-flag';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function form(Form $form): Form
     {
@@ -30,6 +31,11 @@ class CategoryResource extends Resource
                     ->unique()
                     ->required()
                     ->dehydrateStateUsing(fn($state) => Str::ucfirst($state)),
+                Forms\Components\TextInput::make('price'),
+                Forms\Components\Textarea::make('description'),
+                Forms\Components\FileUpload::make('image')->image(),
+                Forms\Components\Toggle::make('isAvailable'),
+
             ]);
     }
 
@@ -38,6 +44,10 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable(),
+                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('price'),
+                Tables\Columns\ImageColumn::make('image_url'),
+                Tables\Columns\ToggleColumn::make('isAvailable'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('j M-y')
                     ->sortable(),
@@ -57,16 +67,16 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CategoriesRelationManager::class
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }
