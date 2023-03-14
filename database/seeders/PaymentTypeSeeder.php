@@ -25,6 +25,7 @@ class PaymentTypeSeeder extends Seeder
             'Cash',
             'Bank transfer'
         ];
+        
         foreach ($names as $name)
             PaymentType::create([
                 'name' => $name

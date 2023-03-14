@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 
@@ -10,8 +11,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function categories()
+    protected $fillable = ['name','price','image_url','description','isAvailable'];
+
+    public function categories(): BelongsToMany
     {
-        return Category::class;
+        return $this->belongsToMany(Category::class);
     }
 }

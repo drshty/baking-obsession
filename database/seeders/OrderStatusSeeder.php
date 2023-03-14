@@ -28,6 +28,7 @@ class OrderStatusSeeder extends Seeder
             'Hold For Pickup',
             'Ready For Pickup'
         ];
+        
         foreach ($statuses as $status)
             OrderStatus::create([
                 'name' => $status

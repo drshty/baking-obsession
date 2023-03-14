@@ -17,11 +17,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $category_id = Category::pluck('id')->toArray();
+
         return [
             'name' => fake()->word,
             'description' => fake()->sentence,
             'price' => fake()->randomFloat(2, 10, 1000),
-            'category_id' => Category::find(1),
+            'category_id' => fake()->randomElement($category_id),
             'isAvailable' => fake()->boolean(50),
             'image_url' => fake()->url()
         ];

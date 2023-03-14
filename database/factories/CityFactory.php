@@ -20,17 +20,12 @@ class CityFactory extends Factory
 
     public function definition(): array
     {
+
+        $province_id = Province::pluck('id')->toArray();
+
         return [
-            'name' => $this->faker->city,
-            'province_id' => Province::inRandomOrder()->first()->id,
+            'name' => fake()->city(),
+            'province_id' => fake()->randomElement($province_id),
         ];
-    }
-    public function configure()
-    {
-        return $this->afterCreating(function (City $city) {
-            $province = Province::find($city->province_id);
-            $city->province()->associate($province);
-            $city->save();
-        });
     }
 }

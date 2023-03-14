@@ -14,13 +14,11 @@ class ProvinceFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
-    protected $model = Province::class;
-    
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->state(),
+            'name' => fake()->unique()->state(),
+            'isActive' => fake()->boolean(50),
         ];
     }
 }

@@ -15,6 +15,9 @@ use Filament\Tables;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
+use Livewire\TemporaryUploadedFile;
 
 class ProductResource extends Resource
 {
@@ -30,12 +33,31 @@ class ProductResource extends Resource
                     ->autofocus()
                     ->unique()
                     ->required()
-                    ->dehydrateStateUsing(fn($state) => Str::ucfirst($state)),
-                Forms\Components\TextInput::make('price'),
-                Forms\Components\Textarea::make('description'),
-                Forms\Components\FileUpload::make('image')->image(),
+                    ->dehydrateStateUsing(fn ($state) => Str::ucfirst($state)),
+                Forms\Components\TextInput::make('price')
+                    ->numeric()
+                    ->integer()
+                    ->rules(['gte:500'])
+                    ->required(),
+                Forms\Components\Textarea::make('description')
+                ->rows(5)
+                ->cols(20)
+                ->minLength(10)
+                ->maxLength(200)
+                ->required(),
+                FileUpload::make('image')
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        $fileName = $file->hashName();
+                        $name = explode('.', $fileName);
+                        return (string) str('assests/products/product_img/' . $name[0] . 'png');
+                    })
+                    ->image()
+                    ->required()
+                    ->label('Product Image'),
+                    CheckboxList::make('categories')
+                        ->relationship('categories', 'name')
+                        ->required(),
                 Forms\Components\Toggle::make('isAvailable'),
-
             ]);
     }
 
